@@ -5,22 +5,27 @@ export interface User {
 }
 
 export class ApiService {
-  getUsers = (): any => {};
+
+  constructor() { }
+
+  public getUsers = (): Array<User> => {
+    return [];
+  };
 }
 
-export class UserHandlerService {
+export class UserService {
 
   apiService: any;
 
-  constructor () {
-    this.apiService = new ApiService()
+  constructor(){
+    this.apiService = new ApiService();
   }
 
-  getUsers = (): Array<User> => {
+  public getUsers = (): Array<User> => {
     const users: Array<User> = this.apiService.getUsers();
     if (users === undefined) return [];
     return users.map((user: User) => this.userModel(user));
   };
 
-  userModel = (user: User): User => user;
+  private userModel = (user: User) => user;
 }

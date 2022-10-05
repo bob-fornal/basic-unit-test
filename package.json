@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "test": "jasmine"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bob-fornal/basic-unit-test.git"
@@ -17,12 +13,14 @@
     "url": "https://github.com/bob-fornal/basic-unit-test/issues"
   },
   "homepage": "https://github.com/bob-fornal/basic-unit-test#readme",
-  "dependencies": {
+  "scripts": {
+    "test": "rimraf ./dist && tsc && jasmine"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^4.3.0",
     "jasmine": "^4.4.0",
-    "ts-loader": "^9.4.1",
-    "typescript": "^4.8.4",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.11.1"
+    "jasmine-ts-console-reporter": "^3.1.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.8.4"
   }
 }
