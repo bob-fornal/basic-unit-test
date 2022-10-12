@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bob-fornal/basic-unit-test.git"
@@ -14,10 +15,13 @@
   },
   "homepage": "https://github.com/bob-fornal/basic-unit-test#readme",
   "scripts": {
-    "test": "rimraf ./dist && tsc && jasmine"
+    "test-js": "jasmine \"src-js/**/*.spec.js\"",
+    "test-ts": "rimraf ./dist && tsc && jasmine \"dist/**/*.spec.js\"",
+    "complexity-report": "./node_modules/.bin/es6-plato -r -d ./report ./src"
   },
   "devDependencies": {
     "@types/jasmine": "^4.3.0",
+    "es6-plato": "^1.2.3",
     "jasmine": "^4.4.0",
     "jasmine-ts-console-reporter": "^3.1.1",
     "rimraf": "^3.0.2",

@@ -18,4 +18,11 @@ describe("UserService", ()=> {
     expect(result).toEqual([]);
   });
 
+  it('expects "getUsers" to return empty array if apiService returns undefined', () => {
+    spyOn(service['apiService'], 'getUsers').and.returnValue(undefined);
+
+    const result: any = service.getUsers();
+    expect(result).toEqual([]);
+  });
+
 });
