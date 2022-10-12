@@ -1,16 +1,20 @@
 
-import { UserService } from './user-service';
+import { ApiService, UserService } from './user-service';
 
-describe("UserService getUsers method test case", ()=> {
+describe("UserService", ()=> {
 
-  let userService: UserService;
+  let apiService: ApiService;
+  let service: UserService;
 
   beforeEach(() => {
-    userService = new UserService();
+    apiService = new ApiService();
+    service = new UserService(apiService);
   });
    
-  it('Should return Array', () => {
-    const result: any = userService.getUsers();
+  it('expects "getUsers" to return empty array if apiService returns undefined', () => {
+    spyOn(service['apiService'], 'getUsers').and.returnValue(undefined);
+
+    const result: any = service.getUsers();
     expect(result).toEqual([]);
   });
 
