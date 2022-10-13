@@ -1,34 +1,18 @@
 
-const services = {};
-services.apiService = {};
-services.userService = {};
+const users = [{
+  userId: 'user-001',
+  title: 'Senior Solutions Developer',
+  username: 'bob-fornal',
+  email: 'bob.fornal@sample.com'
+}];
 
-function ApiService () {
-  const users = [
-    {
-      userId: 'user-001',
-      title: 'Senior Solutions Developer',
-      username: 'bob-fornal',
-      email: 'bob.fornal@sample.com'
-    }
-  ];
-  
-  const getUsers = () => {
-    return this.users;
+export function ApiService (data) {
+
+  let users = data;
+
+  const setData = (data) => {
+    users = data;
   };
-  
-  const getUser = (userId) => {
-    return this.users.find((user) => user.userId === userId);
-  }
-
-  return {
-    users,
-    getUsers,
-    getUser
-  };
-}
-
-function UserService () {
 
   const userModel = (user) => {
     switch (true) {
@@ -49,25 +33,21 @@ function UserService () {
   };
   
   const getUsers = () => {
-    const users = services.apiService.getUsers();
     if (users === undefined) return [];
-    return users.map((user) => this.userModel(user));
+    return users.map((user) => userModel(user));
   };
   
   const getUser = (userId) => {
-    const user = services.apiService.getUser(userId);
+    const user = users.find((datum) => datum.userId === userId);
     if (user === undefined) return null;
-    return this.userModel(user);
+    return userModel(user);
   };
 
   return {
+    users,
+    setData,
     userModel,
     getUsers,
     getUser
   };
 }
-
-services.apiService = ApiService();
-services.userService = UserService();
-
-export default services;

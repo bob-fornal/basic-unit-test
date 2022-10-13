@@ -1,23 +1,25 @@
 
-import services from './user-service.js';
+import { ApiService } from './user-service.js';
 
-describe("UserService", ()=> {
+describe("ApiService", ()=> {
+  let service;
 
   beforeEach(() => {
+    const data = [{
+      userId: 'user-001',
+      title: 'Solutions Developer',
+      username: 'test-user',
+      email: 'test@sample.com'
+    }];
+    service = ApiService(data);
   });
    
-  it('expects "getUsers" to return empty array if apiService returns undefined', () => {
-    spyOn(services.apiService, 'getUsers').and.returnValue(undefined);
+  it('expects "getUsers" to return empty array if api data is undefined', () => {
+    service.setData(undefined);
 
-    const result = services.userService.getUsers();
-    expect(result).toEqual([]);
-  });
-
-  it('expects "getUsers" to return empty array if apiService returns undefined', () => {
-    spyOn(services.apiService, 'getUsers').and.returnValue(undefined);
-
-    const result = services.userService.getUsers();
+    const result = service.getUsers();
     expect(result).toEqual([]);
   });
 
 });
+
