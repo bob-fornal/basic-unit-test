@@ -1,28 +1,34 @@
 
 const users = [{
+  name: 'Bob Fornal',
   userId: 'user-001',
   title: 'Senior Solutions Developer',
   username: 'bob-fornal',
   email: 'bob.fornal@sample.com'
 }];
+const types = {
+  developer: ['Solutions Developer', 'Senior Solutions Developer'],
+  management: ['Scrum Master']
+};
 
-export function ApiService (data) {
+export function ApiService (userData, typeData) {
 
-  let users = data;
+  let users = userData;
+  let types = typeData;
 
   const setData = (data) => {
     users = data;
   };
+  const setTypes = (data) => {
+    types = data;
+  }
 
   const userModel = (user) => {
     switch (true) {
-      case (user.title === 'Solutions Developer'):
+      case (types.developer.includes(user.title) === true):
         user.type = 'developer';
         break;
-      case (user.title === 'Senior Solutions Developer'):
-        user.type = 'developer';
-        break;
-      case (user.title === 'Scrum Master'):
+      case (types.management.includes(user.title) === true):
         user.type = 'management';
         break;
       default:
@@ -43,11 +49,21 @@ export function ApiService (data) {
     return userModel(user);
   };
 
+  const setUsername = (userId, name) => {
+    const user = users.find((datum) => datum.userId === userId);
+    if (user !== undefined) {
+      user.name = name;
+    }
+    return users;
+  };
+
   return {
     users,
+    types,
     setData,
     userModel,
     getUsers,
-    getUser
+    getUser,
+    setUsername
   };
 }

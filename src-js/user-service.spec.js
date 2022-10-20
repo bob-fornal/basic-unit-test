@@ -5,13 +5,18 @@ describe("ApiService", ()=> {
   let service;
 
   beforeEach(() => {
-    const data = [{
+    const userData = [{
+      name: 'Bob Fornal',
       userId: 'user-001',
       title: 'Solutions Developer',
       username: 'test-user',
       email: 'test@sample.com'
     }];
-    service = ApiService(data);
+    const typeData = {
+      developer: ['Solutions Developer', 'Senior Solutions Developer'],
+      management: ['Scrum Master']
+    };
+    service = ApiService(userData, typeData);
   });
    
   it('expects "getUsers" to return empty array if api data is undefined', () => {
