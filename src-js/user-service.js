@@ -7,63 +7,50 @@ const users = [{
   email: 'bob.fornal@sample.com'
 }];
 const types = {
-  developer: ['Solutions Developer', 'Senior Solutions Developer'],
-  management: ['Scrum Master']
+  'Solutions Developer': 'developer',
+  'Senior Solutions Developer': 'developer',
+  'Scrum Master': 'management',
+  default: 'unknown'
 };
 
-export function ApiService (userData, typeData) {
+export class ApiService {
 
-  let users = userData;
-  let types = typeData;
+  users;
+  types;
 
-  const setData = (data) => {
-    users = data;
-  };
-  const setTypes = (data) => {
-    types = data;
+  constructor(users, types) {
+    this.users = users;
+    this.types = types;
   }
 
-  const userModel = (user) => {
-    switch (true) {
-      case (types.developer.includes(user.title) === true):
-        user.type = 'developer';
-        break;
-      case (types.management.includes(user.title) === true):
-        user.type = 'management';
-        break;
-      default:
-        user.type = 'unknown';
-        break;
-    }
-    return user;
+  setUsers = (data) => {
+    this.users = data;
+  };
+  setTypes = (data) => {
+    this.types = data;
+  }
+
+  userModel = (user) => {
+    return this.types[user.type] || this.types.default;
   };
   
-  const getUsers = () => {
-    if (users === undefined) return [];
-    return users.map((user) => userModel(user));
+  getUsers = () => {
+    if (this.users === undefined) return [];
+    return this.users.map((user) => this.userModel(user));
   };
   
-  const getUser = (userId) => {
-    const user = users.find((datum) => datum.userId === userId);
+  getUser = (userId) => {
+    const user = this.users.find((datum) => datum.userId === userId);
     if (user === undefined) return null;
-    return userModel(user);
+    return this.userModel(user);
   };
 
-  const setUsername = (userId, name) => {
-    const user = users.find((datum) => datum.userId === userId);
+  setUsername = (userId, name) => {
+    const user = this.users.find((datum) => datum.userId === userId);
     if (user !== undefined) {
       user.name = name;
     }
-    return users;
+    return this.users;
   };
 
-  return {
-    users,
-    types,
-    setData,
-    userModel,
-    getUsers,
-    getUser,
-    setUsername
-  };
 }

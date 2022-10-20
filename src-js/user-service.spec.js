@@ -13,14 +13,16 @@ describe("ApiService", ()=> {
       email: 'test@sample.com'
     }];
     const typeData = {
-      developer: ['Solutions Developer', 'Senior Solutions Developer'],
-      management: ['Scrum Master']
+      'Solutions Developer': 'developer',
+      'Senior Solutions Developer': 'developer',
+      'Scrum Master': 'management',
+      default: 'unknown'
     };
-    service = ApiService(userData, typeData);
+    service = new ApiService(userData, typeData);
   });
-   
+
   it('expects "getUsers" to return empty array if api data is undefined', () => {
-    service.setData(undefined);
+    service.setUsers(undefined);
 
     const result = service.getUsers();
     expect(result).toEqual([]);
