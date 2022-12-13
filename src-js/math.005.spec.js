@@ -1,5 +1,4 @@
 
-// 5.js
 import { sum, subtract } from './math.js';
 
 describe('Math', () => {
