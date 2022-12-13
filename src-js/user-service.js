@@ -18,21 +18,20 @@ export class ApiService {
   users;
   types;
 
-  constructor(userData, typeData) {
-    this.users = userData;
-    this.types = typeData;
+  constructor(users, types) {
+    this.users = users;
+    this.types = types;
   }
 
   setUsers = (data) => {
-    this.users = [ ...data ];
+    this.users = data;
   };
   setTypes = (data) => {
-    this.types = { ...data };
+    this.types = data;
   }
 
   userModel = (user) => {
-    user.type = this.types[user.title] || this.types.default;
-    return user;
+    return this.types[user.type] || this.types.default;
   };
   
   getUsers = () => {
