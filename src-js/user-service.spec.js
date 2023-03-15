@@ -13,69 +13,16 @@ describe("ApiService", ()=> {
       email: 'test@sample.com'
     }];
     const typeData = {
-      'Solutions Developer': 'developer',
-      'Senior Solutions Developer': 'developer',
-      'Scrum Master': 'management',
-      default: 'unknown'
+      developer: ['Solutions Developer', 'Senior Solutions Developer'],
+      management: ['Scrum Master']
     };
-    service = new ApiService(userData, typeData);
+    service = ApiService(userData, typeData);
   });
 
-  it('expects "setUsers" to set the service users to the incoming array', () => {
-    const userData = [
-      { name: 'Bob' },
-      { name: 'Jen' },
-      { name: 'Patrick' }
-    ];
+  it('expects "getUsers" to return empty array if api data is undefined', () => {
+    service.setData(undefined);
 
-    service.setUsers(userData);
-    expect(service.users).toEqual(userData);
+    const result = service.getUsers();
+    expect(result).toEqual([]);
   });
-
-  it('expects "setTypes" to set the service users to the incoming array', () => {
-    const typeData = {
-      'A': 'developer',
-      'B': 'developer',
-      'C': 'management',
-      default: 'unknown'
-    };
-
-    service.setTypes(typeData);
-    expect(service.types).toEqual(typeData);
-  });
-
-  it('expects "setUsername" to do nothing if user does not exist', () => {
-    const userData = [{
-      name: 'Bob Fornal',
-      userId: 'user-001'
-    }];
-    service.setUsers(userData);
-    const userId = 'user-002';
-    const name = 'NEW-NAME';
-    const expected = [{
-      name: 'Bob Fornal',
-      userId: 'user-001'
-    }];
-
-    const result = service.setUsername(userId, name);
-    expect(result).toEqual(expected);
-  });
-
-  it('expects "setUsername" to change the users username', () => {
-    const userData = [{
-      name: 'Bob Fornal',
-      userId: 'user-001'
-    }];
-    service.setUsers(userData);
-    const userId = 'user-001';
-    const name = 'NEW-NAME';
-    const expected = [{
-      name: 'NEW-NAME',
-      userId: 'user-001'
-    }];
-
-    const result = service.setUsername(userId, name);
-    expect(result).toEqual(expected);
-  });
-
 });

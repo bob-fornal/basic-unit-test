@@ -7,50 +7,63 @@ const users = [{
   email: 'bob.fornal@sample.com'
 }];
 const types = {
-  'Solutions Developer': 'developer',
-  'Senior Solutions Developer': 'developer',
-  'Scrum Master': 'management',
-  default: 'unknown'
+  developer: ['Solutions Developer', 'Senior Solutions Developer'],
+  management: ['Scrum Master']
 };
 
-export class ApiService {
+export function ApiService (userData, typeData) {
 
-  users;
-  types;
+  let users = userData;
+  let types = typeData;
 
-  constructor(users, types) {
-    this.users = users;
-    this.types = types;
-  }
-
-  setUsers = (data) => {
-    this.users = data;
+  const setData = (data) => {
+    users = data;
   };
-  setTypes = (data) => {
-    this.types = data;
-  }
+  const setTypes = (data) => {
+    types = data;
+  };
 
-  userModel = (user) => {
-    return this.types[user.type] || this.types.default;
+  const userModel = (user) => {
+    switch (true) {
+      case (types.developer.includes(user.title) === true):
+        user.type = 'developer';
+        break;
+      case (types.management.includes(user.title) === true):
+        user.type = 'management';
+        break;
+      default:
+        user.type = 'unknown';
+        break;
+    }
   };
   
-  getUsers = () => {
-    if (this.users === undefined) return [];
-    return this.users.map((user) => this.userModel(user));
+  const getUsers = () => {
+    if (users === undefined) return [];
+    return users.map((user) => userModel(user));
   };
   
-  getUser = (userId) => {
-    const user = this.users.find((datum) => datum.userId === userId);
+  const getUser = (userId) => {
+    const user = users.find((datum) => datum.userId === userId);
     if (user === undefined) return null;
-    return this.userModel(user);
+    return userModel(user);
   };
 
-  setUsername = (userId, name) => {
-    const user = this.users.find((datum) => datum.userId === userId);
+  const setUsername = (userId, name) => {
+    const user = users.find((datum) => datum.userId === userId);
     if (user !== undefined) {
       user.name = name;
     }
-    return this.users;
+    return users;
+  };
+
+  return {
+    users,
+    types,
+    setData,
+    userModel,
+    getUsers,
+    getUser,
+    setUsername
   };
 
 }
